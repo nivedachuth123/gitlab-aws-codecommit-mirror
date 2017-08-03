@@ -48,8 +48,12 @@ deploy to production:
     - master
     - develop
 ```
-_NOTE: change tags from `codecommit` to tag of your newly created Gitlab CI Runner._
-_Note: As this searves as a mirror, it just replicates master and develop branches, and will not delete branches from AWS codecommit._
+### NOTE 
+
+* change tags from `codecommit` to tag of your newly created Gitlab CI Runner.
+
+* As this a mirror, it just replicates master and develop branches, and will not delete branches from AWS codecommit.
+
 * Create the following Secret variables under Gitlab repository settings -> pipeline settings.
 ```
 REPO_URL url of the AWS Code commit.(git-codecommit.us-east-1.amazonaws.com/v1/repos/MyDemoRepo)
@@ -59,3 +63,5 @@ SECRET	 AWS codecommit password
 ```
 ![pipelines_ _secret-variables](https://user-images.githubusercontent.com/1140051/28919881-13c10aac-786d-11e7-99cb-a1ee9759ad8e.png)
 * Commit the `.gitlab-ci.yml` to see Gitlab CI Runner send the commits to AWS codecommit repo.
+
+### DONE!
