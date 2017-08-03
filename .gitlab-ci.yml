@@ -1,0 +1,14 @@
+image: rtcamp/gitlab-aws-codecommit-mirror
+stages:
+  - deploy
+
+deploy to production:
+  tags:
+    - codecommit
+  stage: deploy
+  script: 
+    - git remote set-url origin $SCHEME://$USERNAME:$SECRET@$REPO_URL
+    - git push origin HEAD:refs/heads/$CI_COMMIT_REF_NAME --force
+  only:
+    - master
+    - develop
