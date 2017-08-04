@@ -32,6 +32,7 @@ Or you can use our image at `rtcamp/gitlab-aws-codecommit-mirror`
 
 * Clone your existing gitlab repo
 * Copy `.gitlab-ci.yml` from this repo to your repo.
+
 _If you want to sync to a `ssh` enabled AWS Codecommit repo, use the following variant `.gitlab-ci.yml`_
 ```
 image: rtcamp/gitlab-aws-codecommit-mirror
@@ -88,6 +89,6 @@ SSH_PRIVATE_KEY Private key file content that is authenticated for AWS Codecommi
 * If you are using `ssh` authentication. add `setup_ssh` file from this repo to your Gitlab repo.
 
 ![pipelines_ _secret-variables](https://user-images.githubusercontent.com/1140051/28919881-13c10aac-786d-11e7-99cb-a1ee9759ad8e.png)
-* Commit the `.gitlab-ci.yml` to see Gitlab CI Runner send the commits to AWS codecommit repo.
+* Commit the `.gitlab-ci.yml` and other required files to see Gitlab CI Runner send the commits to AWS codecommit repo.
 
 ### DONE!
