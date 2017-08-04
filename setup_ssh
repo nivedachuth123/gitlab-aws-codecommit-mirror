@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+printf "[\e[0;34mNOTICE\e[0m] Setting up SSH access to server.\n"
+mkdir -p ~/.ssh
+if [[ -f /.dockerenv ]]; then
+  cat <<EOF > ~/.ssh/config
+Host *
+        StrictHostKeyChecking no
+Host git-codecommit.*.amazonaws.com
+  User APKAITGDILHRSYPSUMFQ
+  IdentityFile ~/.ssh/id_rsa
+EOF
+fi
+echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+chmod 600 ~/.ssh/id_rsa
