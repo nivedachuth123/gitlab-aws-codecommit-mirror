@@ -32,6 +32,7 @@ Or you can use our image at `rtcamp/gitlab-aws-codecommit-mirror`
 
 * Clone your existing gitlab repo
 * Copy `.gitlab-ci.yml` from this repo to your repo.
+_If you want to sync to a `ssh` enabled AWS Codecommit repo, use the following variant `.gitlab-ci.yml`_
 ```
 image: rtcamp/gitlab-aws-codecommit-mirror
 stages:
@@ -41,26 +42,51 @@ deploy to production:
   tags:
     - codecommit
   stage: deploy
-  script: 
-    - git remote set-url origin $SCHEME://$USERNAME:$SECRET@$REPO_URL
-    - git push origin HEAD:refs/heads/$CI_COMMIT_REF_NAME --force
-  only:
-    - master
-    - develop
+  script:
+    - bash setup_ssh
+    - git clone --mirror $SOURCE_REPO rtSync
+    - cd rtSync
+    - git branch -a
+    - git push --mirror $SCHEME://$REPO_URL
 ```
-### NOTE 
+_If you want to sync to a `https` enabled AWS Codecommit repo, use the following variant `.gitlab-ci.yml`_
+```
+image: rtcamp/gitlab-aws-codecommit-mirror
+stages:
+  - deploy
+
+deploy to production:
+  tags:
+    - codecommit
+  stage: deploy
+  script:
+    - git clone --mirror $SOURCE_REPO rtSync
+    - cd rtSync
+    - git branch -a
+    - git push --mirror $SCHEME://$USERNAME:$SECRET@$REPO_URL
+```
 
 * change tags from `codecommit` to tag of your newly created Gitlab CI Runner.
 
-* As this a mirror, it just replicates master and develop branches, and will not delete branches from AWS codecommit.
+### Setting up variables
 
 * Create the following Secret variables under Gitlab repository settings -> pipeline settings.
 ```
-REPO_URL url of the AWS Code commit.(git-codecommit.us-east-1.amazonaws.com/v1/repos/MyDemoRepo)
-SCHEME	 currently this suports only `https`.
+SCHEME	    Either 'https' or 'ssh' (without quotes)
+REPO_URL    url of the AWS Code commit.(git-codecommit.us-east-1.amazonaws.com/v1/repos/MyDemoRepo)
+SOURCE_REPO url of the source repo, it can be found on the project page of the Gitlab repo(Use ssh url of the repo). 
+```
+* If you use `https` authentication for AWS Codecommit add the following variables.
+```
 USERNAME AWS codecommit username
 SECRET	 AWS codecommit password
 ```
+* If you use `ssh` authentication for AWS Codecommit, add the following variable.
+```
+SSH_PRIVATE_KEY Private key file content that is authenticated for AWS Codecommit.
+```
+* If you are using `ssh` authentication. add `setup_ssh` file from this repo to your Gitlab repo.
+
 ![pipelines_ _secret-variables](https://user-images.githubusercontent.com/1140051/28919881-13c10aac-786d-11e7-99cb-a1ee9759ad8e.png)
 * Commit the `.gitlab-ci.yml` to see Gitlab CI Runner send the commits to AWS codecommit repo.
 
