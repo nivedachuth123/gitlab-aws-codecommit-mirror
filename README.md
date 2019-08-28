@@ -91,4 +91,6 @@ SSH_PRIVATE_KEY Private key file content that is authenticated for AWS Codecommi
 ![pipelines_ _secret-variables](https://user-images.githubusercontent.com/1140051/28919881-13c10aac-786d-11e7-99cb-a1ee9759ad8e.png)
 * Commit the `.gitlab-ci.yml` and other required files to see Gitlab CI Runner send the commits to AWS codecommit repo.
 
-### DONE!
+### Does this interest you?
+
+<a href="https://rtcamp.com/"><img src="https://rtcamp.com/wp-content/uploads/2019/04/github-banner@2x.png" alt="Join us at rtCamp, we specialize in providing high performance enterprise WordPress solutions"></a>
